@@ -14,9 +14,7 @@ module.exports = {
             createdAt as date,
             isEvent,
             p.name as eventName,
-            p.state as state,
-            p.city as city,
-            p.zip as zip,
+            location,
             startTime,
             startDate,
             endTime,
@@ -39,9 +37,7 @@ SELECT post_id,
     date,
     isEvent,
     eventName,
-    state,
-    city,
-    zip,
+    location,
     startTime,
     startDate,
     endTime,
@@ -113,9 +109,7 @@ SELECT post_id,
             createdAt as date,
             isEvent,
             p.name as eventName,
-            state,
-            city,
-            zip,
+            location,
             startTime,
             startDate,
             endTime,
@@ -135,9 +129,7 @@ SELECT post_id,
         date,
         isEvent,
         eventName,
-        state,
-        city,
-        zip,
+        location,
         startTime,
         startDate,
         endTime,
@@ -211,9 +203,7 @@ SELECT post_id,
         body.content,
         body.isEvent,
         body.name,
-        body.state,
-        body.city,
-        body.zip,
+        body.location,
         body.startTime,
         body.startDate,
         body.endTime,
@@ -222,8 +212,8 @@ SELECT post_id,
       ];
 
       query = `INSERT INTO posts (user_id, group_id, content, isEvent, name,
-        state, city, zip, startTime, startDate, endTime, endDate, payment_amt)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+        location, startTime, startDate, endTime, endDate, payment_amt)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
       RETURNING id
       `;
     }
@@ -716,7 +706,10 @@ SELECT post_id,
     return group_id.rows[0]
   },
   makeGroupAdmin: (info) => {
-    const values = [info.group_id, info.user_id];
+    const values = [
+      info.group_id,
+      info.user_id
+    ];
 
     const query = `
       UPDATE
@@ -732,13 +725,18 @@ SELECT post_id,
   },
   deleteGroup: (group_id) => {
     const query = `
-      DELETE FROM groups
-      WHERE id = ${group_id}`;
+      DELETE FROM
+        groups
+      WHERE
+        id = ${group_id}`;
 
     return pool.query(query);
   },
   getMessages: async (info) => {
-    const values = [info.user_id, info.friend_id];
+    const values = [
+      info.user_id,
+      info.friend_id
+    ];
 
     const query = `
       SELECT
@@ -762,7 +760,11 @@ SELECT post_id,
     return results.rows;
   },
   postMessage: (info) => {
-    const values = [info.sender_id, info.receiver_id, info.message];
+    const values = [
+      info.sender_id,
+      info.receiver_id,
+      info.message
+    ];
 
     const query = `
       INSERT INTO
@@ -773,4 +775,22 @@ SELECT post_id,
 
     return pool.query(query, values);
   },
+  denyGroupRequest : (info) => {
+    const values = [
+      info.group_id,
+      info.requester_id
+    ]
+
+    console.log(values)
+
+    const query = `
+      DELETE FROM
+        group_requests
+      WHERE
+        group_id = $1
+      AND
+        requester_id = $2`;
+
+    return pool.query(query, values)
+  }
 };

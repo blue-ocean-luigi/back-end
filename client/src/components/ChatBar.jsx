@@ -1,4 +1,5 @@
 import React from 'react';
+import { io } from 'socket.io-client';
 import {
   Box,
   Flex,
@@ -12,6 +13,7 @@ import {
   MenuList,
   MenuItem,
 } from '@chakra-ui/react';
+
 
 export default function ChatBar() {
   return (

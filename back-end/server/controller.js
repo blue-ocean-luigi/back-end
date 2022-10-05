@@ -362,4 +362,13 @@ module.exports = {
       res.sendStatus(400);
     }
   },
+  denyGroupRequest: async (req, res) => {
+    try {
+      await model.denyGroupRequest(req.params);
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(400)
+    }
+  }
 };

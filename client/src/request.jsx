@@ -305,4 +305,12 @@ export const please = {
       method: "delete",
       baseURL: basePath,
     }),
+
+  //deny group request
+  denyGroupRequest: (group_id, requester_id) =>
+    axios({
+      url: `/groups/request/${group_id}&${requester_id}`,
+      method: "delete",
+      baseURL: basePath,
+    }),
 };
