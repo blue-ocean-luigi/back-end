@@ -392,7 +392,7 @@ SELECT post_id,
       info.aboutme,
       info.picture,
     ];
-    console.log(values);
+
 
     const query = `
       INSERT INTO
@@ -481,8 +481,6 @@ SELECT post_id,
       ORDER BY
         u.firstname ASC`;
 
-    console.log(requestList);
-
     const results = await Promise.all([
       pool.query(friendList),
       pool.query(requestList),
@@ -541,7 +539,6 @@ SELECT post_id,
       info.user_id,
       info.other_id,
     ];
-    console.log(values)
 
     const query = `
       SELECT
@@ -582,7 +579,6 @@ SELECT post_id,
   },
   requestToJoinGroup: (info) => {
     const values = [info.group_id, info.user_id, info.message];
-    console.log(values);
     const query = `
       INSERT INTO
         group_requests
@@ -594,7 +590,6 @@ SELECT post_id,
   },
   addMemberToGroup: (info) => {
     const values = [info.group_id, info.user_id];
-    console.log(values);
 
     const addMember = `
       INSERT INTO

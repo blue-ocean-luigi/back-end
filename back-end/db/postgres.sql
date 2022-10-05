@@ -8,7 +8,8 @@ CREATE TABLE users (
   lastName varchar(20) NOT NULL,
   email varchar(30) NOT NULL UNIQUE,
   aboutme text,
-  picture text
+  picture text,
+  banner text
 );
 
 CREATE TABLE groups (
@@ -133,4 +134,4 @@ SELECT setval('groups_id_seq', COALESCE((SELECT MAX(id)+1 FROM groups), 1), fals
 SELECT setval('messages_id_seq', COALESCE((SELECT MAX(id)+1 FROM messages), 1), false);
 SELECT setval('post_photos_id_seq', COALESCE((SELECT MAX(id)+1 FROM post_photos), 1), false);
 SELECT setval('posts_id_seq', COALESCE((SELECT MAX(id)+1 FROM posts), 1), false);
-SELECT setval('users_id_seq', COALESCE((SELECT MAX(id)+1 FROM users), 1), false);
+SELECT setval('users_id_seq', COALESCE((SELECT MAX(id)+1 FROM users), 1), false);`
