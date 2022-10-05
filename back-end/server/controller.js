@@ -36,7 +36,6 @@ module.exports = {
   deletePost: async (req, res) => {
     const post_id = req.params.post_id;
     try {
-      console.log(post_id);
       await model.deletePost(post_id);
       res.send(200);
     } catch (error) {
@@ -156,7 +155,6 @@ module.exports = {
   },
 
   getUserByEmail: async (req, res) => {
-    console.log("controller path is good");
     const email = req.query.email;
     try {
       const userInfo = await model.getUserByEmail(email);
@@ -195,7 +193,6 @@ module.exports = {
   },
 
   addUser: async (req, res) => {
-    console.log("path to addUser");
     try {
       let id = await model.addUser(req.body);
       res.status(200).send(id.rows[0]);
@@ -217,7 +214,6 @@ module.exports = {
 
   getFriendsOfUser: async (req, res) => {
     const id = req.query.user_id;
-    console.log({ id });
     try {
       const friends = await model.getFriendsOfUser(id);
       res.status(200).send(friends);
@@ -274,7 +270,6 @@ module.exports = {
     }
   },
   requestToJoinGroup: async (req, res) => {
-    console.log(req.body);
     try {
       await model.requestToJoinGroup(req.body);
       res.sendStatus(200);
@@ -284,7 +279,6 @@ module.exports = {
     }
   },
   addMemberToGroup: async (req, res) => {
-    console.log("addmembertogroup");
     try {
       await model.addMemberToGroup(req.body);
       res.sendStatus(200);
@@ -294,7 +288,6 @@ module.exports = {
     }
   },
   removeGroupMember: async (req, res) => {
-    console.log("remove");
     try {
       await model.removeGroupMember(req.params);
       res.sendStatus(200);
@@ -333,7 +326,6 @@ module.exports = {
     }
   },
   makeGroupAdmin: async (req, res) => {
-    console.log("admin");
     try {
       await model.makeGroupAdmin(req.body);
       res.sendStatus(200);
@@ -370,4 +362,13 @@ module.exports = {
       res.sendStatus(400);
     }
   },
+  denyGroupRequest: async (req, res) => {
+    try {
+      await model.denyGroupRequest(req.params);
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(400)
+    }
+  }
 };

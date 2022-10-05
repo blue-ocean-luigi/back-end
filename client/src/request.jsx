@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-const axios = require('axios');
+import axios from 'axios';
 
 const basePath = 'http://localHost:3001/crossing';
 
-module.exports = {
+export const please = {
   // get user info/friends/groups by email after authorization
   getUserByEmail: async (email) =>
     axios({
@@ -302,6 +302,14 @@ module.exports = {
   deleteRsvp: (post_id, user_id) =>
     axios({
       url: `/rsvp/${post_id}&${user_id}`,
+      method: "delete",
+      baseURL: basePath,
+    }),
+
+  //deny group request
+  denyGroupRequest: (group_id, requester_id) =>
+    axios({
+      url: `/groups/request/${group_id}&${requester_id}`,
       method: "delete",
       baseURL: basePath,
     }),
